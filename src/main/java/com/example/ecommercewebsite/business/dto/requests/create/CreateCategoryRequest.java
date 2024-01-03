@@ -1,6 +1,5 @@
 package com.example.ecommercewebsite.business.dto.requests.create;
 
-import com.example.ecommercewebsite.entities.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,12 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateProductRequest {
-    private int categoryId;
+public class CreateCategoryRequest {
     private String name;
-    private double unitPrice;
-    private int quantity;
-    private String description;
-    private Status status;
 }
 
