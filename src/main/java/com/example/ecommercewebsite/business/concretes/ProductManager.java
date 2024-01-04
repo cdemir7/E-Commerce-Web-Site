@@ -7,6 +7,7 @@ import com.example.ecommercewebsite.business.dto.responses.create.CreateProductR
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllProductsResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetProductResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdateProductResponse;
+import com.example.ecommercewebsite.business.rules.ProductBusinessRules;
 import com.example.ecommercewebsite.entities.Product;
 import com.example.ecommercewebsite.repository.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.List;
 public class ProductManager implements ProductService {
     private final ProductRepository repository;
     private final ModelMapper mapper;
+    private final ProductBusinessRules rules;
+
     @Override
     public List<GetAllProductsResponse> getAll() {
         List<Product>products =repository.findAll();
@@ -33,6 +36,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public GetProductResponse getById(int id) {
+        rules.checkIfProductExistsById(id);
         var product = repository.findById(id).orElseThrow();
         GetProductResponse response = mapper.map(product, GetProductResponse.class);
 
@@ -41,6 +45,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public CreateProductResponse add(CreateProductRequest request) {
+        rules.checkIfProductExistsByName(request.getName());
         var product = mapper.map(request, Product.class);
         product.setId(0);
         var createdProduct = repository.save(product);
@@ -52,6 +57,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public UpdateProductResponse update(int id, UpdateProductRequest request) {
+        rules.checkIfProductExistsById(id);
         var product = mapper.map(request, Product.class);
         product.setId(id);
         var updatedProduct = repository.save(product);
@@ -62,6 +68,7 @@ public class ProductManager implements ProductService {
 
     @Override
     public void delete(int id) {
+        rules.checkIfProductExistsById(id);
         repository.deleteById(id);
     }
 }

@@ -22,4 +22,8 @@ public class Cart {
     private double unitPrice;
     private String description;
     private Status status;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

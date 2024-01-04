@@ -7,6 +7,7 @@ import com.example.ecommercewebsite.business.dto.responses.create.CreateCategory
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllCategoriesResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetCategoryResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdateCategoryResponse;
+import com.example.ecommercewebsite.business.rules.CategoryBusinessRules;
 import com.example.ecommercewebsite.entities.Category;
 import com.example.ecommercewebsite.repository.CategoryRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.List;
 public class CategoryManager implements CategoryService {
     private final CategoryRepository repository;
     private final ModelMapper mapper;
+    private final CategoryBusinessRules rules;
+
     @Override
     public List<GetAllCategoriesResponse> getAll() {
         List<Category> categories = repository.findAll();
@@ -33,6 +36,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public GetCategoryResponse getById(int id) {
+        rules.checkIfCategoryExistsById(id);
         var category = repository.findById(id).orElseThrow();
         GetCategoryResponse response = mapper.map(category, GetCategoryResponse.class);
 
@@ -41,6 +45,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public CreateCategoryResponse add(CreateCategoryRequest request) {
+        rules.checkIfCategoryExistsByName(request.getName());
         var category = mapper.map(request, Category.class);
         category.setId(0);
         var createdCategory = repository.save(category);
@@ -51,6 +56,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public UpdateCategoryResponse update(int id, UpdateCategoryRequest request) {
+        rules.checkIfCategoryExistsById(id);
         var category = mapper.map(request, Category.class);
         category.setId(id);
         var updatedCategory = repository.save(category);
@@ -61,6 +67,7 @@ public class CategoryManager implements CategoryService {
 
     @Override
     public void delete(int id) {
+        rules.checkIfCategoryExistsById(id);
         repository.deleteById(id);
     }
 }
