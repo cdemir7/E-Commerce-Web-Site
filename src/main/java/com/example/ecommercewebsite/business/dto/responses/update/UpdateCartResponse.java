@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCartResponse {
+    private int productId;
     private int id;
     private String name;
     private double unitPrice;

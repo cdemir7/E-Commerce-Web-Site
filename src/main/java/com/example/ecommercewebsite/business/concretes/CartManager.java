@@ -1,6 +1,7 @@
 package com.example.ecommercewebsite.business.concretes;
 
 import com.example.ecommercewebsite.business.abstracts.CartService;
+import com.example.ecommercewebsite.business.abstracts.ProductService;
 import com.example.ecommercewebsite.business.dto.requests.create.CreateCartRequest;
 import com.example.ecommercewebsite.business.dto.requests.update.UpdateCartRequest;
 import com.example.ecommercewebsite.business.dto.responses.create.CreateCartResponse;
@@ -35,7 +36,7 @@ public class CartManager implements CartService {
 
     @Override
     public CreateCartResponse add(CreateCartRequest request) {
-
+        rules.checkIfProduct(request);
         var cart = mapper.map(request, Cart.class);
         cart.setId(0);
         var createdCart = repository.save(cart);
