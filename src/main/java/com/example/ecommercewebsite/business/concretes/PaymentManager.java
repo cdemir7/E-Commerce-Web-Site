@@ -7,6 +7,7 @@ import com.example.ecommercewebsite.business.dto.responses.create.CreatePaymentR
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllPaymentsResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetPaymentResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdatePaymentResponse;
+import com.example.ecommercewebsite.business.rules.PaymentBusinessRules;
 import com.example.ecommercewebsite.entities.Payment;
 import com.example.ecommercewebsite.repository.PaymentRepository;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 public class PaymentManager implements PaymentService {
     private final PaymentRepository repository;
     private final ModelMapper mapper;
+    private final PaymentBusinessRules rules;
 
     @Override
     public List<GetAllPaymentsResponse> getAll() {
@@ -42,6 +44,7 @@ public class PaymentManager implements PaymentService {
 
     @Override
     public CreatePaymentResponse add(CreatePaymentRequest request) {
+        rules.checkIfCart(request);
         var payment = mapper.map(request, Payment.class);
         payment.setId(0);
         payment.setBalance(availableBalanceCreate(request));

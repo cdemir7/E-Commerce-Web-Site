@@ -17,6 +17,7 @@ import java.util.List;
 @Table(name = "carts")
 public class Cart {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;

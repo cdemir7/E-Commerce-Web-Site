@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CartBusinessRules {
     private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
 
     public void checkIfProduct(CreateCartRequest request){
-        if (!cartRepository.existsByProductId(request.getProductId())){
+        if (!productRepository.existsById(request.getProductId())){
             throw new RuntimeException("Böyle bir ürün yok.");
         }
     }
