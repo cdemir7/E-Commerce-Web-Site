@@ -7,6 +7,7 @@ import com.example.ecommercewebsite.business.dto.responses.create.CreateProductR
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllProductsResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetProductResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdateProductResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,12 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateProductResponse add(@RequestBody CreateProductRequest request){
+    public CreateProductResponse add(@Valid @RequestBody CreateProductRequest request){
         return service.add(request);
     }
 
     @PutMapping("{id}")
-    public UpdateProductResponse update(@PathVariable int id, @RequestBody UpdateProductRequest request){
+    public UpdateProductResponse update(@PathVariable int id, @Valid @RequestBody UpdateProductRequest request){
         return service.update(id, request);
     }
 

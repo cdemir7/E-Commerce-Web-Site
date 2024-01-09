@@ -6,6 +6,7 @@ import com.example.ecommercewebsite.business.dto.requests.update.UpdateCartReque
 import com.example.ecommercewebsite.business.dto.responses.create.CreateCartResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllCartsResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdateCartResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,12 @@ public class CartController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateCartResponse add(@RequestBody CreateCartRequest request){
+    public CreateCartResponse add(@Valid @RequestBody CreateCartRequest request){
         return service.add(request);
     }
 
     @PutMapping("/{id}")
-    public UpdateCartResponse update(@PathVariable int id, @RequestBody UpdateCartRequest request){
+    public UpdateCartResponse update(@PathVariable int id, @Valid @RequestBody UpdateCartRequest request){
         return service.update(id, request);
     }
 

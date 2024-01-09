@@ -7,6 +7,7 @@ import com.example.ecommercewebsite.business.dto.responses.create.CreatePaymentR
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllPaymentsResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetPaymentResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdatePaymentResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,12 @@ public class PaymentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreatePaymentResponse add(@RequestBody CreatePaymentRequest request){
+    public CreatePaymentResponse add(@Valid @RequestBody CreatePaymentRequest request){
         return service.add(request);
     }
 
     @PutMapping("/{id}")
-    public UpdatePaymentResponse update(@PathVariable int id, @RequestBody UpdatePaymentRequest request){
+    public UpdatePaymentResponse update(@PathVariable int id, @Valid @RequestBody UpdatePaymentRequest request){
         return service.update(id, request);
     }
 

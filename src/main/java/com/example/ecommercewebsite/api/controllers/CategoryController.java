@@ -7,6 +7,7 @@ import com.example.ecommercewebsite.business.dto.responses.create.CreateCategory
 import com.example.ecommercewebsite.business.dto.responses.get.GetAllCategoriesResponse;
 import com.example.ecommercewebsite.business.dto.responses.get.GetCategoryResponse;
 import com.example.ecommercewebsite.business.dto.responses.update.UpdateCategoryResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +32,12 @@ public class CategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateCategoryResponse add(@RequestBody CreateCategoryRequest request){
+    public CreateCategoryResponse add(@Valid @RequestBody CreateCategoryRequest request){
         return service.add(request);
     }
 
     @PutMapping("/{id}")
-    public UpdateCategoryResponse update(@PathVariable int id, @RequestBody UpdateCategoryRequest request){
+    public UpdateCategoryResponse update(@PathVariable int id, @Valid @RequestBody UpdateCategoryRequest request){
         return service.update(id, request);
     }
 
